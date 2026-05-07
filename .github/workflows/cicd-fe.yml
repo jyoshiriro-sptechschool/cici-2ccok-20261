@@ -30,7 +30,17 @@ jobs:
         run: echo Hello, world!
 
       - name: Passo bugado
-        run: rm -rf ./pasta_loka
+        uses: easingthemes/ssh-deploy@main
+        with:
+          SSH_PRIVATE_KEY: oioiuiouououo
+          REMOTE_HOST: 10.0.0.0
+          REMOTE_USER: loko
+          TARGET: /home/loko/frontend
+          # ARGS para rsync: -rltgoDzvO para cópia recursiva, compressão e outros
+          ARGS: "-rltgoDzvO --delete" 
+          # SOURCE: O que será copiado. Pode ser o diretório de build (ex: ./dist)
+          SOURCE: "./frontend/dist/" 
+
       
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
