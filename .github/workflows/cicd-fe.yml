@@ -1,49 +1,43 @@
-# This is a basic workflow to help you get started with Actions
+dições de conclusão
+name: CI/CD para EC2 pública
 
-name: CI
-
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches:
+      - main # O branch que acionará o deploy
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  gerar_zuado:
-    # The type of runner that the job will run on
+  build_FE:
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+      # 1. Checkout do código
+      - name: Checkout do Repositório
+        uses: actions/checkout@v4
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+      # 2. Configuração do ambiente Node
+      - name: FE - Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          
+      # 3. Build da aplicação (Se for uma aplicação que precisa ser construída, ex: React, Angular, Vue)
+      - name: FE - Instalar Dependências e Fazer Build
+        run: |
+             npm install
+             npm run build --if-present 
+             # Se sua app não precisar de build, remova esta etapa
+        working-directory: ./frontend
 
-      - name: Passo bugado
+      # 4. Deploy (Transferência de arquivos e execução de comandos remotos)
+      - name: FE - Copiar arquivos e Deploy (Usando SSH com rsync)
         uses: easingthemes/ssh-deploy@main
         with:
-          SSH_PRIVATE_KEY: oioiuiouououo
-          REMOTE_HOST: 10.0.0.0
-          REMOTE_USER: loko
-          TARGET: /home/loko/frontend
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ubuntu
+          TARGET: /home/ubuntu/frontend
           # ARGS para rsync: -rltgoDzvO para cópia recursiva, compressão e outros
           ARGS: "-rltgoDzvO --delete" 
           # SOURCE: O que será copiado. Pode ser o diretório de build (ex: ./dist)
           SOURCE: "./frontend/dist/" 
-
-      
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
