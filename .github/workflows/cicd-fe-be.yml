@@ -137,8 +137,8 @@ jobs:
             echo "Arquivo jar enviado ao ec2 privado"
 
             # reininciando o servico 'api' via docker compose
-            ssh -i $ARQUIVO_PEM $USUARIO_IP 'docker compose -f /home/ubuntu/docker/compose-java-api.yml stop'            
+            ssh -i $ARQUIVO_PEM $USUARIO_IP 'sudo docker compose -f /home/ubuntu/docker/compose-java-api.yml stop'            
             echo "servico api parado via docker compose"        
 
-            ssh -i $ARQUIVO_PEM $USUARIO_IP 'docker compose -f /home/ubuntu/docker/compose-java-api.yml up > /tmp/api-pets.log 2>&1 &'            
+            ssh -i $ARQUIVO_PEM $USUARIO_IP 'sudo docker compose -f /home/ubuntu/docker/compose-java-api.yml up > /tmp/api-pets.log 2>&1 &'            
             echo "servico api iniciado via docker compose. Logs em /tmp/api-pets.log"        
