@@ -51,7 +51,16 @@ jobs:
         with:
           distribution: 'temurin' # ou a distribuição que preferir
           java-version: '21'
-          cache: 'maven' # Configura cache do Maven para acelerar builds futuros
+          cache: 'maven' # 
+
+      # 5.1. Configurando cache do Maven para acelerar builds futuros 
+      - name: BE - Cache do Maven
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
           
       # 6. Execução dos testes automatizados do projeto de backend
       - name: BE - Executar Testes automatizados
@@ -113,7 +122,7 @@ jobs:
             echo "Arquivo .pem anterior excluído"
             
             echo "${{ secrets.EC2_SSH_KEY }}" > $ARQUIVO_PEM || true
-            echo "Arquivo pem '$ARQUIVO_PEM' criado"
+            echo "Arquivo pem $ARQUIVO_PEM ${ARQUIVO_PEM} ${{ ARQUIVO_PEM }} criado"
             chmod 400 $ARQUIVO_PEM || true
             echo "Permissões ao pem concedidas"
 
