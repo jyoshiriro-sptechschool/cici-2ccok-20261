@@ -62,7 +62,7 @@ function PetsList() {
           className="search-button"
           disabled={searchTerm.length < 3}
         >
-          Pesquisar
+          Buscar
         </button>
         <button 
           onClick={() => {
@@ -71,7 +71,7 @@ function PetsList() {
           }} 
           className="list-all-button"
         >
-          Listar Todos
+          Mostrar Todos
         </button>
       </div>
 
@@ -87,7 +87,7 @@ function PetsList() {
 
       {(!loading && pets.length > 0) && (
         <div id="resultado-pets" className="pets-count">
-          {pets.length} {pets.length === 1 ? 'pet encontrado' : 'pets encontrados'}
+          {pets.length} {pets.length === 1 ? 'bichinho encontrado' : 'bichinhos encontrados'}
         </div>
       )}
 
