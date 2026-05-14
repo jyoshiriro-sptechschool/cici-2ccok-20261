@@ -1,0 +1,10 @@
+services:
+  web:
+    image: nginx
+    ports:
+      - "80:80"
+    volumes:
+      # O lado esquerdo é a sua pasta local (onde está o seu build)
+      # O lado direito é o caminho interno do container Nginx
+      - /home/ubuntu/frontend/html:/usr/share/nginx/html:ro
+    restart: always
