@@ -122,7 +122,7 @@ jobs:
             echo "Arquivo .pem anterior excluído"
             
             echo "${{ secrets.EC2_SSH_KEY }}" > $ARQUIVO_PEM || true
-            echo "Arquivo pem $ARQUIVO_PEM ${ARQUIVO_PEM} ${{ ARQUIVO_PEM }} criado"
+            echo "Arquivo pem $ARQUIVO_PEM ${ARQUIVO_PEM} criado"
             chmod 400 $ARQUIVO_PEM || true
             echo "Permissões ao pem concedidas"
 
