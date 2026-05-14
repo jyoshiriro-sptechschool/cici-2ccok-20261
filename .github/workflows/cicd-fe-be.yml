@@ -60,7 +60,7 @@ jobs:
 
       # 7. Geração do .jar
       - name: BE - Gerar Artefato .JAR
-        run: mvn package -DskipTests=true # -DskipTests=true pq os testes foram executados no passo anterior
+        run: mvn -B package -DskipTests=true # -DskipTests=true pq os testes foram executados no passo anterior
         working-directory: ./backend
 
       # 8. Dando o mesmo nome sempre ao .jar
@@ -108,12 +108,12 @@ jobs:
             ARQUIVO_PEM="/home/ubuntu/chavetmp.pem"
             echo "Arquivo pem que sera criado: $ARQUIVO_PEM"
 
-            # excluindo o arquivo .pem, caso exista
+            # excluindo o arquivo .pem anterior, caso exista
             rm $ARQUIVO_PEM -f
-            echo "Arquivo .pem excluído"
+            echo "Arquivo .pem anterior excluído"
             
             echo "${{ secrets.EC2_SSH_KEY }}" > $ARQUIVO_PEM || true
-            echo "Arquivo pem criado"
+            echo "Arquivo pem '$ARQUIVO_PEM' criado"
             chmod 400 $ARQUIVO_PEM || true
             echo "Permissões ao pem concedidas"
 
